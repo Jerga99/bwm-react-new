@@ -1,12 +1,12 @@
+
 import React from 'react';
 
-// functional component
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <h1>Hello World</h1>
+    <div>HelloWorld 
+      <h2>What a nice Day</h2>
     </div>
-  );
+  )
 }
 
 export default App;
