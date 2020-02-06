@@ -1,11 +1,10 @@
 
 import React from 'react';
+import CounterApp from './components/CounterApp/CounterApp'
 
 const App = () => {
   return (
-    <div>HelloWorld 
-      <h2>What a nice Day</h2>
-    </div>
+    <CounterApp />
   )
 }
 
