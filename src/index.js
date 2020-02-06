@@ -8,5 +8,7 @@ import './index.css';
 // const element = React.createElement('h1', {className: 'title'}, 'HelloWorld', h2Element);
 const rootElement = document.getElementById('root');
 
+// No Magic (:
 ReactDOM.render(<App/>, rootElement);
+
 
