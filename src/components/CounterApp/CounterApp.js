@@ -7,6 +7,8 @@ import './CounterApp.css';
 
 const CounterApp = (props) => {
   const [count, setCount] = useState(0);
+  const [whatever, setWhatever] = useState(10); 
+
   const { title } = props;
 
   useEffect(() => {
@@ -14,6 +16,7 @@ const CounterApp = (props) => {
   }, [])
 
   const increment = (step) => () => setCount(count + step)
+  const doWhatever = () => setWhatever(whatever + 1);
   
   return (
     <div>
@@ -23,6 +26,7 @@ const CounterApp = (props) => {
           countValue={count} 
           handleIncrement={increment}
         />
+        <button onClick={doWhatever}>Do whatever</button>
       </div>
     </div>
   )
