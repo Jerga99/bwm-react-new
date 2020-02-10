@@ -4,14 +4,18 @@ import Header from './components/shared/Header';
 import Routes from './Routes';
 
 import { BrowserRouter as Router } from "react-router-dom";
+import { StateContext } from './state-context';
+import store from './store';
 
 const App = () => {
 
   return (
-    <Router>
-      <Header />
-      <Routes />
-    </Router>
+    <StateContext.Provider value={store}>
+      <Router>
+        <Header />
+        <Routes />
+      </Router>
+    </StateContext.Provider>
   )
 }
 

@@ -11,7 +11,7 @@ import Register from './pages/Register';
 
 const Routes = () => {
   return (
-    <div class="container bwm-container">
+    <div className="container bwm-container">
       <Switch>
         <Route exact path="/">
           <RentalHome />
