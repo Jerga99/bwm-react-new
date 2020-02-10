@@ -1,0 +1,25 @@
+
+@import './colors.scss';
+@import './header.scss';
+
+.navbar-dark .navbar-nav {
+  .nav-link {
+    &:hover {
+      color: $main-app-color;
+    }
+  }
+}
+
+.btn {
+  &.btn-bwm-main {
+    border-color: $main-app-color;
+    color: $main-app-color;
+
+    &:hover, &:focus, &:active {
+      background-color: $main-app-color;
+      border-color: $main-app-color;
+      color: white;
+      box-shadow: none;
+    }
+  }
+}
