@@ -7,12 +7,17 @@ class Login extends React.Component {
 
   render() {
 
-    const { rentals } = this.props;
-
+    const { data } = this.props;
     return (
-      <p>{JSON.stringify(rentals())}</p>
+      <p>{JSON.stringify(data())}</p>
     )
   }
 }
 
-export default connect(Login);
+const mapStateToProps = (state) => {
+  return {
+    data: state.data2
+  }
+}
+
+export default connect(mapStateToProps)(Login);
