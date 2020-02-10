@@ -1,17 +1,18 @@
 
 
 import React from 'react';
-import { StateContext } from '../state-context';
+import connect from '../store/connect';
 
 class Login extends React.Component {
 
   render() {
+
+    const { rentals } = this.props;
+
     return (
-      <p>{JSON.stringify(this.context.rentals())}</p>
+      <p>{JSON.stringify(rentals())}</p>
     )
   }
 }
 
-Login.contextType = StateContext;
-
-export default Login;
+export default connect(Login);
