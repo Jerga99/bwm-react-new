@@ -2,6 +2,8 @@
 import React from 'react';
 import Header from './components/shared/Header';
 
+import { Router, Route } from './components/Bwm-Router';
+
 import RentalHome from './pages/RentalHome';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -10,25 +12,20 @@ import Register from './pages/Register';
 // Explaining how everyhing works (:
 const App = () => {
 
-  const renderPages = () => {
-    const { pathname } = window.location;
-
-    switch(pathname) {
-      case '/':
-        return <RentalHome />;
-      case '/login':
-        return <Login />;
-      case '/register':
-        return <Register />;
-      default:
-        return <RentalHome />;
-    }
-  }
-
   return (
     <div>
-      <Header />
-      { renderPages() }
+      <Router>
+        <Header />
+        <Route path="/">
+          <RentalHome />
+        </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route path="/register">
+          <Register />
+        </Route>
+      </Router>
     </div>
   )
 }
