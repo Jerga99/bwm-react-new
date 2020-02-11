@@ -3,6 +3,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchRentalById } from '../actions';
+import { capitalize } from '../helpers/functions';
 
 
 class RentalDetail extends React.Component {
@@ -40,7 +41,7 @@ class RentalDetail extends React.Component {
                 {/* <!-- TODO: Display title --> */}
                 <h1 className="rental-title">{rental.title}</h1>
                 {/* <!-- TODO: Display city --> */}
-                <h2 className="rental-city">{rental.city}</h2>
+                <h2 className="rental-city">{capitalize(rental.city)}</h2>
                 <div className="rental-room-info">
                   {/* <!-- TODO: Display numOfRooms --> */}
                   <span><i className="fa fa-building"></i>{rental.numOfRooms} bedrooms</span>
