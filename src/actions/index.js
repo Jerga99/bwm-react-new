@@ -1,5 +1,5 @@
 
-import { rentalData } from '../store/data';
+import { rentalData } from 'store/data';
 
 export const fetchRentals = () => { 
   return {

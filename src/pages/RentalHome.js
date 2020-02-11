@@ -1,9 +1,9 @@
 
 
 import React from 'react';
-import RentalCard from '../components/rental/RentalCard';
+import RentalCard from 'components/rental/RentalCard';
 import { connect } from 'react-redux'
-import { fetchRentals } from '../actions';
+import { fetchRentals } from 'actions';
 
 class RentalHome extends React.Component {
 
