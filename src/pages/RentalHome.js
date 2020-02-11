@@ -3,13 +3,13 @@
 import React from 'react';
 import RentalCard from '../components/rental/RentalCard';
 import connect from '../store/connect';
+import { fetchRentals } from '../actions';
 
 class RentalHome extends React.Component {
 
   componentDidMount() {
     debugger
-    this.props.dispatch({type: 'FETCH_RENTALS'})
-    this.props.dispatch({type: 'FETCH_RENTALS'})
+    this.props.dispatch(fetchRentals());
   }
 
   renderRentals = (rentals) => 
@@ -20,7 +20,6 @@ class RentalHome extends React.Component {
     );
   
   render() {
-    debugger
     const { rentals } = this.props;
 
     return (
