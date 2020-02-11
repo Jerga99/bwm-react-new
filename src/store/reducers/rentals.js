@@ -7,11 +7,13 @@
 // Math.random()
 
 const rentals = (state = [], action) => {
-  debugger
-  if (action.type === 'FETCH_RENTALS') {
-    return action.rentals;
-  } else {
-    return state;
+  switch(action.type) {
+    case 'FETCH_RENTALS':
+      return action.rentals;
+    case 'CREATE_RENTAL':
+      return [...state, action.rental];
+    default:
+      return state;
   }
 }
 
