@@ -3,7 +3,7 @@
 exports.rentalData = [{
   _id: '1',
   title: "Nice view on ocean",
-  city: "San Francisco",
+  city: "san francisco",
   category: "condo",
   image: "http://via.placeholder.com/350x250",
   numOfRooms: 4,
@@ -14,7 +14,7 @@ exports.rentalData = [{
 {
   _id: '2',
   title: "Modern apartment in center",
-  city: "New York",
+  city: "new york",
   category: "apartment",
   image: "http://via.placeholder.com/350x250",
   numOfRooms: 1,
@@ -25,7 +25,7 @@ exports.rentalData = [{
 {
   _id: '3',
   title: "Old house in nature",
-  city: "Bratislava",
+  city: "bratislava",
   category: "house",
   image: "http://via.placeholder.com/350x250",
   numOfRooms: 5,
