@@ -1,8 +1,13 @@
 
 
 import React from 'react';
+import RegisterForm from 'components/forms/RegisterForm';
 
 class Register extends React.Component {
+
+  registerUser = (registerData) => {
+    alert(JSON.stringify(registerData));
+  }
 
   render() {
     return (
@@ -10,47 +15,7 @@ class Register extends React.Component {
         <div className="row">
           <div className="col-md-5">
             <h1 className="page-title">Register</h1>
-            <form>
-              <div className="form-group">
-                <label htmlFor="username">Username</label>
-                <input 
-                  type="text"
-                  className="form-control"
-                  id="username" />
-                {/* <div className="alert alert-danger">
-                  <div *ngIf="username.errors.required">
-                    Username is required.
-                  </div>
-                </div> */}
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <input 
-                  type="email"
-                  className="form-control"
-                  id="email" />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <input 
-                  type="password"
-                  className="form-control"
-                  id="password" />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="passwordConfirmation">Confirm Password</label>
-                <input 
-                  type="password"
-                  className="form-control"
-                  id="passwordConfirmation" />
-              </div>
-              <button 
-                type="submit" 
-                className="btn btn-bwm-main">Submit</button>
-            </form>
+            <RegisterForm onSubmit={this.registerUser} />
             {/* <div className="alert alert-danger">
               <p>
                 Some Error

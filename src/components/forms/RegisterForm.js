@@ -1,22 +1,40 @@
 
+
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
 // eslint-disable-next-line
 const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-const LoginForm = ({onSubmit}) => {
+const RegisterForm = ({onSubmit}) => {
 
-  const { register, handleSubmit, errors } = useForm();
+  const { register, errors, handleSubmit } = useForm();
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="form-group">
+        <label htmlFor="username">Username</label>
+        <input 
+          ref={register({required: true})}
+          type="text"
+          className="form-control"
+          name="username"
+          id="username" />
+        { errors.username &&
+          <div className="alert alert-danger"> 
+            { errors.username.type === 'required' &&
+              <span>Username is required!</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div className="form-group">
         <label htmlFor="email">Email</label>
-        <input
+        <input 
           ref={register({required: true, pattern: EMAIL_PATTERN})}
-          name="email"
           type="email"
           className="form-control"
+          name="email"
           id="email" />
         { errors.email &&
           <div className="alert alert-danger"> 
@@ -29,13 +47,14 @@ const LoginForm = ({onSubmit}) => {
           </div>
         }
       </div>
+
       <div className="form-group">
         <label htmlFor="password">Password</label>
         <input 
           ref={register({required: true, minLength: 8})}
-          name="password"
           type="password"
           className="form-control"
+          name="password"
           id="password" />
         { errors.password &&
           <div className="alert alert-danger"> 
@@ -48,6 +67,26 @@ const LoginForm = ({onSubmit}) => {
           </div>
         }
       </div>
+
+      <div className="form-group">
+        <label htmlFor="passwordConfirmation">Confirm Password</label>
+        <input 
+          ref={register({required: true, minLength: 8})}
+          type="password"
+          className="form-control"
+          name="passwordConfirmation"
+          id="passwordConfirmation" />
+        { errors.passwordConfirmation &&
+          <div className="alert alert-danger"> 
+            { errors.passwordConfirmation.type === 'required' &&
+              <span>Password confirmation is required!</span>
+            }
+            { errors.passwordConfirmation.type === 'minLength' &&
+              <span>Minimum length of password confirmation is 8 characters!</span>
+            }
+          </div>
+        }
+      </div>
       <button 
         type="submit" 
         className="btn btn-bwm-main">Submit</button>
@@ -55,4 +94,4 @@ const LoginForm = ({onSubmit}) => {
   )
 }
 
-export default LoginForm;
+export default RegisterForm;
