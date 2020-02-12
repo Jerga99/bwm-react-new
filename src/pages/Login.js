@@ -1,21 +1,12 @@
 
 
 import React from 'react';
+import LoginForm from 'components/forms/LoginForm';
 
 class Login extends React.Component {
 
-  state = {
-    email: 'test@gmail.com',
-    password: ''
-  }
-
-  handleInputChange = (event) => {
-    const {value, name} = event.target;
-    this.setState({[name]: value});
-  }
-
-  handleSubmit = () => {
-    alert(JSON.stringify(this.state));
+  loginUser = (loginData) => {
+    alert(JSON.stringify(loginData));
   }
 
   render() {
@@ -27,40 +18,7 @@ class Login extends React.Component {
             {/* <!-- <div className="alert alert-success">
               Some message
             </div> --> */}
-            <form>
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <input
-                  onChange={this.handleInputChange} 
-                  name="email"
-                  type="email"
-                  className="form-control"
-                  value={this.state.email}
-                  id="email" />
-                {/* <div className="alert alert-danger">
-                  <div>
-                    Email is required.
-                  </div>
-                  <div>
-                    Must be valid email format!
-                  </div>
-                </div> */}
-              </div>
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <input 
-                  onChange={this.handleInputChange}
-                  name="password"
-                  value={this.state.password}
-                  type="password"
-                  className="form-control"
-                  id="password" />
-              </div>
-              <button 
-                onClick={this.handleSubmit}
-                type="button" 
-                className="btn btn-bwm-main">Submit</button>
-            </form>
+            <LoginForm onSubmit={this.loginUser} />
             {/* <div className="alert alert-danger">
               <p>
                 Some Error
