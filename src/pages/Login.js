@@ -4,6 +4,20 @@ import React from 'react';
 
 class Login extends React.Component {
 
+  state = {
+    email: 'test@gmail.com',
+    password: ''
+  }
+
+  handleInputChange = (event) => {
+    const {value, name} = event.target;
+    this.setState({[name]: value});
+  }
+
+  handleSubmit = () => {
+    alert(JSON.stringify(this.state));
+  }
+
   render() {
     return (
       <div className="bwm-form">
@@ -16,9 +30,12 @@ class Login extends React.Component {
             <form>
               <div className="form-group">
                 <label htmlFor="email">Email</label>
-                <input 
+                <input
+                  onChange={this.handleInputChange} 
+                  name="email"
                   type="email"
                   className="form-control"
+                  value={this.state.email}
                   id="email" />
                 {/* <div className="alert alert-danger">
                   <div>
@@ -32,12 +49,16 @@ class Login extends React.Component {
               <div className="form-group">
                 <label htmlFor="password">Password</label>
                 <input 
+                  onChange={this.handleInputChange}
+                  name="password"
+                  value={this.state.password}
                   type="password"
                   className="form-control"
                   id="password" />
               </div>
               <button 
-                type="submit" 
+                onClick={this.handleSubmit}
+                type="button" 
                 className="btn btn-bwm-main">Submit</button>
             </form>
             {/* <div className="alert alert-danger">
