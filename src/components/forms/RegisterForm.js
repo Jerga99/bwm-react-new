@@ -2,13 +2,14 @@
 
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { sameAs } from 'helpers/validators';
 
 // eslint-disable-next-line
 const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const RegisterForm = ({onSubmit}) => {
 
-  const { register, errors, handleSubmit } = useForm();
+  const { register, errors, handleSubmit, getValues } = useForm();
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="form-group">
@@ -71,7 +72,7 @@ const RegisterForm = ({onSubmit}) => {
       <div className="form-group">
         <label htmlFor="passwordConfirmation">Confirm Password</label>
         <input 
-          ref={register({required: true, minLength: 8})}
+          ref={register({required: true, minLength: 8, validate: {sameAs: sameAs('password', getValues)}})}
           type="password"
           className="form-control"
           name="passwordConfirmation"
@@ -83,6 +84,9 @@ const RegisterForm = ({onSubmit}) => {
             }
             { errors.passwordConfirmation.type === 'minLength' &&
               <span>Minimum length of password confirmation is 8 characters!</span>
+            }
+            { errors.passwordConfirmation.type === 'sameAs' &&
+              <span>Password confirmation has to be the same as password!</span>
             }
           </div>
         }
