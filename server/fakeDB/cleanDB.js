@@ -1,10 +1,12 @@
+
 const mongoose = require('mongoose');
 const config = require('../config/dev');
 const FakeDB = require('./FakeDB');
 
 mongoose.connect(config.DB_URI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useCreateIndex: true
 }, async () => {
   const fakeDB = new FakeDB();
   console.log('Starting populating DB');
