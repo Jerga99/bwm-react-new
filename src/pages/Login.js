@@ -18,10 +18,7 @@ class Login extends React.Component {
 
   signIn = (loginData) => {
     this.props.auth.signIn(loginData)
-      .then(token => {
-        console.log(token);
-        this.setState({shouldRedirect: true});
-      })
+      .then(_ => this.setState({shouldRedirect: true}))
       .catch(errors => this.setState({errors}))
   }
 

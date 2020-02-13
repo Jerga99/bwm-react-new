@@ -30,6 +30,11 @@ const AuthBaseProvider = ({children, dispatch}) => {
     return jwt.decode(token);
   }
 
+  const signOut = () => {
+    localStorage.removeItem('bwm_token');
+    dispatch({type: 'USER_SIGNED_OUT'});
+  }
+
   const signIn = (loginData) => {
     return loginUser(loginData)
       .then(token => {
@@ -42,7 +47,8 @@ const AuthBaseProvider = ({children, dispatch}) => {
 
   const authApi = {
     signIn,
-    checkAuthState
+    checkAuthState,
+    signOut
   }
 
   return (

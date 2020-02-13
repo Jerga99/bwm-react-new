@@ -5,7 +5,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
 
-const Header = ({username, isAuth}) => {
+const Header = ({username, isAuth, logout}) => {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -49,6 +49,7 @@ const Header = ({username, isAuth}) => {
               </li>
               <li className="nav-item">
                 <div 
+                  onClick={logout}
                   className="nav-link">Logout
                 </div>
               </li>

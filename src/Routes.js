@@ -9,6 +9,7 @@ import RentalHome from './pages/RentalHome';
 import RentalDetail from './pages/RentalDetail';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import SecretPage from 'pages/SecretPage';
 
 const Routes = () => {
   return (
@@ -19,6 +20,9 @@ const Routes = () => {
         </Route>
         <Route path="/rentals/:id">
           <RentalDetail />
+        </Route>
+        <Route path="/secret">
+          <SecretPage />
         </Route>
         <Route path="/login">
           <Login />
