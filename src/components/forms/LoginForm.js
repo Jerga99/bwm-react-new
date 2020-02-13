@@ -1,6 +1,11 @@
 
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, ErrorMessage } from 'react-hook-form';
+
+const Error = ({children}) => 
+  <div className="alert alert-danger">
+    {children}
+  </div>
 
 // eslint-disable-next-line
 const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -13,40 +18,31 @@ const LoginForm = ({onSubmit}) => {
       <div className="form-group">
         <label htmlFor="email">Email</label>
         <input
-          ref={register({required: true, pattern: EMAIL_PATTERN})}
+          ref={register({
+            required: 'Email is required', 
+            pattern: {value: EMAIL_PATTERN, message: 'Invalid email format!'}})}
           name="email"
           type="email"
           className="form-control"
           id="email" />
-        { errors.email &&
-          <div className="alert alert-danger"> 
-            { errors.email.type === 'required' &&
-              <span>Email is required!</span>
-            }
-            { errors.email.type === 'pattern' &&
-              <span>Not valid email format!</span>
-            }
-          </div>
-        }
+        <ErrorMessage as={<Error />} errors={errors} name="email">
+          {({message}) => <p>{message}</p>}
+        </ErrorMessage>
       </div>
       <div className="form-group">
         <label htmlFor="password">Password</label>
         <input 
-          ref={register({required: true, minLength: 8})}
+          ref={
+            register({
+              required: "Password is required!", 
+              minLength: {value: 8, message: 'Minimum length of password is 8 characters!'}})}
           name="password"
           type="password"
           className="form-control"
           id="password" />
-        { errors.password &&
-          <div className="alert alert-danger"> 
-            { errors.password.type === 'required' &&
-              <span>Password is required!</span>
-            }
-            { errors.password.type === 'minLength' &&
-              <span>Minimum length of password is 8 characters!</span>
-            }
-          </div>
-        }
+        <ErrorMessage as={<Error />} errors={errors} name="password">
+          {({message}) => <p>{message}</p>}
+        </ErrorMessage>
       </div>
       <button 
         type="submit" 
