@@ -28,3 +28,15 @@ export const createRental = rental => {
     rental
   }
 }
+
+
+// AUTH ACTIONS
+
+export const registerUser = (registerData) => {
+  return axios
+    .post('/api/v1/users/register', registerData)
+    .catch(error => {
+      debugger
+      return Promise.reject(error);
+    })
+}

@@ -2,20 +2,36 @@
 
 import React from 'react';
 import RegisterForm from 'components/forms/RegisterForm';
+import { registerUser } from 'actions';
+import { Redirect } from 'react-router-dom';
 
 class Register extends React.Component {
 
-  registerUser = (registerData) => {
-    alert(JSON.stringify(registerData));
+  state = {
+    shouldRedirect: false
+  }
+
+  signUp = (registerData) => {
+    registerUser(registerData)
+      .then(() => this.setState({shouldRedirect: true}))
+      .catch(errors => {
+        debugger
+        console.log(errors)})
   }
 
   render() {
+    const { shouldRedirect } = this.state;
+
+    if (shouldRedirect) {
+     return <Redirect to={{pathname: '/login'}} />
+    }
+    
     return (
       <div className="bwm-form">
         <div className="row">
           <div className="col-md-5">
             <h1 className="page-title">Register</h1>
-            <RegisterForm onSubmit={this.registerUser} />
+            <RegisterForm onSubmit={this.signUp} />
             {/* <div className="alert alert-danger">
               <p>
                 Some Error
