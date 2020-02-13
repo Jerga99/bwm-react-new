@@ -4,11 +4,15 @@ import { connect } from 'react-redux';
 import { loginUser } from 'actions';
 import jwt from 'jsonwebtoken';
 
-const { createContext } = React;
+const { createContext, useContext } = React;
 
 const AuthContext = createContext(null);
 
 const AuthBaseProvider = ({children, dispatch}) => {
+
+  const checkAuthState = () => {
+    alert('Checking Auth State');
+  }
 
   const decodeToken = token => {
     return jwt.decode(token);
@@ -28,7 +32,8 @@ const AuthBaseProvider = ({children, dispatch}) => {
   }
 
   const authApi = {
-    signIn
+    signIn,
+    checkAuthState
   }
 
   return (
@@ -40,11 +45,14 @@ const AuthBaseProvider = ({children, dispatch}) => {
 
 export const AuthProvider = connect()(AuthBaseProvider);
 
+export const useAuth = () => {
+  return useContext(AuthContext);
+}
 
 export const withAuth = Component => props => (
-    <AuthContext.Consumer>
-      {authApi => <Component {...props} auth={authApi} /> }
-    </AuthContext.Consumer>
-  )
+  <AuthContext.Consumer>
+    {authApi => <Component {...props} auth={authApi} /> }
+  </AuthContext.Consumer>
+)
   
 
