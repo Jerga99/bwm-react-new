@@ -13,21 +13,37 @@ export const MapProvider = ({children, apiKey}) => {
     const map = tt.map({
       key: apiKey,
       container: 'bwm-map',
-      style: 'tomtom://vector/1/basic-main'
+      style: 'tomtom://vector/1/basic-main',
+      zoom: 15
     });
       
     map.addControl(new tt.NavigationControl());
+    return map;
+  }
+
+  const setCenter = (map, position) => {
+    map.setCenter(new tt.LngLat(position.lon, position.lat))
   }
 
   const requestGeoLocation = location => {
     return axios
       .get(`https://api.tomtom.com/search/2/geocode/${location}.JSON?key=${apiKey}`)
       .then(res => res.data)
+      .then(tomRes => {
+        const results = tomRes.results;
+        if (results && results.length > 0) {
+          const { position } = results[0];
+          return position;
+        }
+
+        return Promise.reject('Location not found!');
+      })
   }
 
   const mapApi = {
     initMap,
-    requestGeoLocation
+    requestGeoLocation,
+    setCenter
   }
 
   return (

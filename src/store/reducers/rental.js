@@ -4,7 +4,7 @@ import { combineReducers } from 'redux';
 const initRentalReducer = () => {
   const item  = (state = {}, action) => {
     switch(action.type) {
-      case 'IS_FETCHING_RENTAL':
+      case 'UNMOUNT_RENTAL':
         return {};
       case 'FETCH_RENTAL_BY_ID':
         return action.rental;
