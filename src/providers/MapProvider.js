@@ -26,7 +26,6 @@ export const MapProvider = ({children, apiKey}) => {
   }
 
   const addMarker = (map, position) => {
-
     const markerDiv = document.createElement('div');
     markerDiv.className = 'bwm-marker';
 
@@ -36,6 +35,15 @@ export const MapProvider = ({children, apiKey}) => {
       .setLngLat([position.lon, position.lat])
       .addTo(map)
   }
+
+  const addPopupMessage = (map, message) => {
+    new tt.Popup({className: 'bwm-popup', closeButton: false, closeOnClick: false})
+      .setLngLat(new tt.LngLat(0,0))
+      .setHTML(`<p>${message}</p>`)
+      .addTo(map)
+  }
+
+  const locationNotFound = () => Promise.reject('Location not found!')
 
   const requestGeoLocation = location => {
     return axios
@@ -48,15 +56,17 @@ export const MapProvider = ({children, apiKey}) => {
           return position;
         }
 
-        return Promise.reject('Location not found!');
+        return locationNotFound();
       })
+      .catch(() => locationNotFound())
   }
 
   const mapApi = {
     initMap,
     requestGeoLocation,
     setCenter,
-    addMarker
+    addMarker,
+    addPopupMessage
   }
 
   return (
