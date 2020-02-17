@@ -14,15 +14,27 @@ export const MapProvider = ({children, apiKey}) => {
       key: apiKey,
       container: 'bwm-map',
       style: 'tomtom://vector/1/basic-main',
-      zoom: 15
+      zoom: 15,
+      scrollZoom: false
     });
       
-    map.addControl(new tt.NavigationControl());
     return map;
   }
 
   const setCenter = (map, position) => {
     map.setCenter(new tt.LngLat(position.lon, position.lat))
+  }
+
+  const addMarker = (map, position) => {
+
+    const markerDiv = document.createElement('div');
+    markerDiv.className = 'bwm-marker';
+
+    new tt.Marker({
+      element: markerDiv
+    })
+      .setLngLat([position.lon, position.lat])
+      .addTo(map)
   }
 
   const requestGeoLocation = location => {
@@ -43,7 +55,8 @@ export const MapProvider = ({children, apiKey}) => {
   const mapApi = {
     initMap,
     requestGeoLocation,
-    setCenter
+    setCenter,
+    addMarker
   }
 
   return (
