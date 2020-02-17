@@ -35,10 +35,7 @@ export const fetchRentalById = rentalId => async dispatch => {
 }
 
 export const createRental = rental => {
-  return {
-    type: 'CREATE_RENTAL',
-    rental
-  }
+  return axios.post('/api/v1/rentals', rental);
 }
 
 
