@@ -1,6 +1,7 @@
 
 import axios from 'axios';
-
+import axiosService from 'services/AxiosService';
+const { bwmAxios } = axiosService;
 
 export const extractApiErrors = (resError) => {
   let errors = [{title: 'Error!', detail: 'Ooops, something went wrong!'}];
@@ -35,7 +36,7 @@ export const fetchRentalById = rentalId => async dispatch => {
 }
 
 export const createRental = rental => {
-  return axios.post('/api/v1/rentals', rental);
+  return bwmAxios.post('/rentals', rental);
 }
 
 
