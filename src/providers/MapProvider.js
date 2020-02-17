@@ -1,6 +1,7 @@
 
 import React from 'react';
 import tt from '@tomtom-international/web-sdk-maps';
+import axios from 'axios';
 
 const { createContext, useContext } = React;
 
@@ -18,8 +19,15 @@ export const MapProvider = ({children, apiKey}) => {
     map.addControl(new tt.NavigationControl());
   }
 
+  const requestGeoLocation = location => {
+    return axios
+      .get(`https://api.tomtom.com/search/2/geocode/${location}.JSON?key=${apiKey}`)
+      .then(res => res.data)
+  }
+
   const mapApi = {
-    initMap
+    initMap,
+    requestGeoLocation
   }
 
   return (
