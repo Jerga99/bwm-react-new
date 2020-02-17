@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchRentalById } from 'actions';
 import RentalInfo from 'components/rental/RentalInfo';
+import TomMap from 'components/map/TomMap';
 
 
 class RentalDetail extends React.Component {
@@ -24,8 +25,7 @@ class RentalDetail extends React.Component {
               <img src={rental.image} alt={rental.title} />
             </div>
             <div className="col-md-6">
-              {/* <!-- TODO: Display rental map --> */}
-              <img src={rental.image} alt={rental.title} />
+              <TomMap />
             </div>
           </div>
         </div>
