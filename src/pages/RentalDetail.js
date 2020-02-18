@@ -25,7 +25,7 @@ class RentalDetail extends React.Component {
 
   render() {
     const { rental, isFetching } = this.props;
-    if (isFetching) { return null; }
+    if (isFetching || !rental._id) { return null; }
     return (
       <section id="rentalDetails">
         <div className="upper-section">
@@ -44,7 +44,7 @@ class RentalDetail extends React.Component {
               <RentalInfo rental={rental} />
             </div>
             <div className="col-md-4"> 
-              <BookingReserve />
+              <BookingReserve rental={rental} />
             </div>
           </div>
         </div>
