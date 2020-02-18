@@ -4,6 +4,7 @@ import DateRangePicker from 'react-bootstrap-daterangepicker';
 import BwmModal from 'components/shared/Modal';
 import Moment from 'moment';
 import { extendMoment } from 'moment-range';
+import { createBooking } from 'actions';
  
 const moment = extendMoment(Moment);
 
@@ -39,7 +40,8 @@ class BookingReserve extends React.Component {
       proposedBooking: {
         ...this.state.proposedBooking,
         nights: this.nights,
-        totalPrice: this.totalPrice
+        price: this.price,
+        rental: this.props.rental
       }
     })
   }
@@ -53,13 +55,20 @@ class BookingReserve extends React.Component {
     this.setState({
       proposedBooking: {
         ...this.state.proposedBooking,
-        guests: event.target.value
+        guests: parseInt(event.target.value, 10)
       }
     })
   }
 
-  reserveRental = () => {
-    alert(JSON.stringify(this.state.proposedBooking));
+  reserveRental = (closeCallback) => {
+    createBooking(this.state.proposedBooking)
+      .then(newBooking => {
+        alert('Success!');
+        closeCallback();
+      })
+      .catch((error) => {
+        alert('Error!');
+      })
   }
 
   get nights() {
@@ -69,7 +78,7 @@ class BookingReserve extends React.Component {
     return Array.from(range.by('days')).length - 1;
   }
 
-  get totalPrice() {
+  get price() {
     const { rental: { dailyPrice}} = this.props;
     return dailyPrice && this.nights * dailyPrice; 
   }
@@ -85,8 +94,7 @@ class BookingReserve extends React.Component {
 
   render() {
     const { rental } = this.props;
-    debugger
-    const { proposedBooking: { nights, guests, totalPrice}} = this.state;
+    const { proposedBooking: { nights, guests, price}} = this.state;
     return (
       <div className='booking'>
         <h3 className='booking-price'>$ {rental.dailyPrice} <span className='booking-per-night'>per night</span></h3>
@@ -131,7 +139,7 @@ class BookingReserve extends React.Component {
           <em>{nights}</em> Nights /
           <em> ${rental.dailyPrice}</em> per Night
           <p>Guests: <em>{guests}</em></p>
-          <p>Price: <em>${totalPrice}</em></p>
+          <p>Price: <em>${price}</em></p>
           <p>Do you confirm your booking for selected days?</p>
         </BwmModal>
         <hr></hr>
