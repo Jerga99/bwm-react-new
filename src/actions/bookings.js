@@ -7,3 +7,8 @@ export const createBooking = booking => {
     .then(res => res.data)
     .catch(err => Promise.reject(extractApiErrors(err.response || {})))
 }
+
+export const getBookings = rentalId => {
+  return bwmAxios.get(`/bookings?rental=${rentalId}`)
+    .then(res => res.data)
+}

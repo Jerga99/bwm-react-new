@@ -4,7 +4,7 @@ import DateRangePicker from 'react-bootstrap-daterangepicker';
 import BwmModal from 'components/shared/Modal';
 import Moment from 'moment';
 import { extendMoment } from 'moment-range';
-import { createBooking } from 'actions';
+import { createBooking, getBookings } from 'actions';
  
 const moment = extendMoment(Moment);
 
@@ -13,6 +13,7 @@ class BookingReserve extends React.Component {
   constructor() {
     super();
     this.dateRef = React.createRef();
+    this.bookedOutDates = [];
 
     this.state = {
       proposedBooking: {
@@ -21,6 +22,11 @@ class BookingReserve extends React.Component {
         endAt: null
       }
     }
+  }
+
+  async componentDidMount() {
+    const { rental } = this.props;
+    this.bookedOutDates = await getBookings(rental._id);
   }
 
   handleApply = (_, {startDate, endDate}) => {
@@ -47,8 +53,13 @@ class BookingReserve extends React.Component {
   }
 
   checkInvalidDates = (date) => {
-    // if date is invalid return true
-    return date < moment().add(-1, 'days');
+    let isBookedOut = false;
+
+    isBookedOut = this.bookedOutDates.some(booking => 
+      moment.range(booking.startAt, booking.endAt).contains(date)
+    )
+
+    return date < moment().add(-1, 'days') || isBookedOut;
   }
 
   handleGuestsChange = (event) => {
