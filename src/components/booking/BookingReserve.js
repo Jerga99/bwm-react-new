@@ -1,6 +1,7 @@
 
 import React from 'react';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
+import BwmModal from 'components/shared/Modal';
 import moment from 'moment';
 
 class BookingReserve extends React.Component {
@@ -81,9 +82,13 @@ class BookingReserve extends React.Component {
             aria-describedby='guests'>
           </input>
         </div>
-        <button 
+        <BwmModal>
+          <p>Hello World</p>
+        </BwmModal>
+        {/* <button 
           onClick={this.reserveRental}
-          className='btn btn-bwm-main btn-block'>Reserve place now</button>
+          className='btn btn-bwm-main btn-block'>Reserve place now
+        </button> */}
         <hr></hr>
         <p className='booking-note-title'>People are interested into this house</p>
         <p className='booking-note-text'>

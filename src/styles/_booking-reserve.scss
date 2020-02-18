@@ -53,10 +53,14 @@
 
 
 // MODAL
-.booking-modal {
+.bwm-modal {
   .title {
     font-weight: 700;
     font-size: 26px;
+  }
+
+  .modal-body {
+    padding-left: 0;
   }
 
   .buttons {
