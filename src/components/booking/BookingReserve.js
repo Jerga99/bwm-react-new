@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import BwmModal from 'components/shared/Modal';
 import ApiErrors from 'components/forms/ApiErrors';
@@ -117,58 +118,67 @@ class BookingReserve extends React.Component {
   }
 
   render() {
-    const { rental } = this.props;
+    const { rental, isAuth } = this.props;
     const { errors, proposedBooking: { nights, guests, price}} = this.state;
     return (
       <div className='booking'>
         <h3 className='booking-price'>$ {rental.dailyPrice} <span className='booking-per-night'>per night</span></h3>
         <hr></hr>
-        <div className='form-group'>
-        <label htmlFor='dates'>Dates</label>
-        <DateRangePicker
-          onApply={this.handleApply}
-          opens="left"
-          containerStyles={{display: 'block'}}
-          isInvalidDate={this.checkInvalidDates}>
-          <input
-            ref={this.dateRef}
-            id="dates"
-            type="text"
-            className="form-control">
-          </input>
-        </DateRangePicker>
-        </div>
-        <div className='form-group'>
-          <label htmlFor='guests'>Guests</label>
-          <input 
-            onChange={this.handleGuestsChange}
-            value={guests}
-            type='number'
-            className='form-control'
-            id='guests'
-            aria-describedby='guests'>
-          </input>
-        </div>
-        <BwmModal
-          onSubmit={this.reserveRental}
-          title="Confirm Booking"
-          subtitle={this.formattedDate}
-          openBtn={
-            <button
-              onClick={this.processAditionalData}
-              disabled={!this.isBookingValid}
-              className='btn btn-bwm-main btn-block'>Reserve place now
-            </button>}
-        >
-          <div className="mb-2">
-            <em>{nights}</em> Nights /
-            <em> ${rental.dailyPrice}</em> per Night
-            <p>Guests: <em>{guests}</em></p>
-            <p>Price: <em>${price}</em></p>
-            <p>Do you confirm your booking for selected days?</p>
+        { !isAuth &&
+          <Link 
+            to={{pathname: '/login'}}
+            className="btn btn-bwm-main btn-block">Login to book this place</Link>
+        }
+        { isAuth &&
+        <> 
+          <div className='form-group'>
+          <label htmlFor='dates'>Dates</label>
+          <DateRangePicker
+            onApply={this.handleApply}
+            opens="left"
+            containerStyles={{display: 'block'}}
+            isInvalidDate={this.checkInvalidDates}>
+            <input
+              ref={this.dateRef}
+              id="dates"
+              type="text"
+              className="form-control">
+            </input>
+          </DateRangePicker>
           </div>
-          <ApiErrors errors={errors}/>
-        </BwmModal>
+          <div className='form-group'>
+            <label htmlFor='guests'>Guests</label>
+            <input 
+              onChange={this.handleGuestsChange}
+              value={guests}
+              type='number'
+              className='form-control'
+              id='guests'
+              aria-describedby='guests'>
+            </input>
+          </div>
+          <BwmModal
+            onSubmit={this.reserveRental}
+            title="Confirm Booking"
+            subtitle={this.formattedDate}
+            openBtn={
+              <button
+                onClick={this.processAditionalData}
+                disabled={!this.isBookingValid}
+                className='btn btn-bwm-main btn-block'>Reserve place now
+              </button>}
+          >
+            <div className="mb-2">
+              <em>{nights}</em> Nights /
+              <em> ${rental.dailyPrice}</em> per Night
+              <p>Guests: <em>{guests}</em></p>
+              <p>Price: <em>${price}</em></p>
+              <p>Do you confirm your booking for selected days?</p>
+            </div>
+            <ApiErrors errors={errors}/>
+          </BwmModal>
+        </>
+        }
         <hr></hr>
         <p className='booking-note-title'>People are interested into this house</p>
         <p className='booking-note-text'>

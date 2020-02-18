@@ -24,7 +24,7 @@ class RentalDetail extends React.Component {
   }
 
   render() {
-    const { rental, isFetching } = this.props;
+    const { rental, isFetching, isAuth } = this.props;
     if (isFetching || !rental._id) { return null; }
     return (
       <section id="rentalDetails">
@@ -44,7 +44,7 @@ class RentalDetail extends React.Component {
               <RentalInfo rental={rental} />
             </div>
             <div className="col-md-4"> 
-              <BookingReserve rental={rental} />
+              <BookingReserve rental={rental} isAuth={isAuth}/>
             </div>
           </div>
         </div>
@@ -53,8 +53,8 @@ class RentalDetail extends React.Component {
   }
 }
 
-const mapStateToProps = ({rental}) => 
-  ({ rental: rental.item, isFetching: rental.isFetching })
+const mapStateToProps = ({rental, auth: { isAuth }}) => 
+  ({ rental: rental.item, isFetching: rental.isFetching, isAuth: isAuth })
 
 const RentalDetailWithRouter = withRouter(RentalDetail);
 export default connect(mapStateToProps)(RentalDetailWithRouter);
