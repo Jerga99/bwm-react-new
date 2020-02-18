@@ -2,9 +2,11 @@
 import React from 'react';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import BwmModal from 'components/shared/Modal';
+import ApiErrors from 'components/forms/ApiErrors';
 import Moment from 'moment';
 import { extendMoment } from 'moment-range';
 import { createBooking, getBookings } from 'actions';
+import { toast } from 'react-toastify';
  
 const moment = extendMoment(Moment);
 
@@ -16,6 +18,7 @@ class BookingReserve extends React.Component {
     this.bookedOutDates = [];
 
     this.state = {
+      errors: [],
       proposedBooking: {
         guests: '',
         startAt: null,
@@ -71,15 +74,25 @@ class BookingReserve extends React.Component {
     })
   }
 
+  resetData = () => {
+    this.dateRef.current.value = '';
+    this.setState({
+      errors: [],
+      proposedBooking: {guests: '', startAt: null, endAt: null}
+    })
+  }
+
   reserveRental = (closeCallback) => {
     createBooking(this.state.proposedBooking)
       .then(newBooking => {
-        alert('Success!');
+        this.bookedOutDates.push(newBooking);
+        this.resetData();
+        toast.success("Booking has been created!", {
+          autoClose: 3000
+        });
         closeCallback();
       })
-      .catch((error) => {
-        alert('Error!');
-      })
+      .catch((errors) => this.setState({errors}))
   }
 
   get nights() {
@@ -105,7 +118,7 @@ class BookingReserve extends React.Component {
 
   render() {
     const { rental } = this.props;
-    const { proposedBooking: { nights, guests, price}} = this.state;
+    const { errors, proposedBooking: { nights, guests, price}} = this.state;
     return (
       <div className='booking'>
         <h3 className='booking-price'>$ {rental.dailyPrice} <span className='booking-per-night'>per night</span></h3>
@@ -147,11 +160,14 @@ class BookingReserve extends React.Component {
               className='btn btn-bwm-main btn-block'>Reserve place now
             </button>}
         >
-          <em>{nights}</em> Nights /
-          <em> ${rental.dailyPrice}</em> per Night
-          <p>Guests: <em>{guests}</em></p>
-          <p>Price: <em>${price}</em></p>
-          <p>Do you confirm your booking for selected days?</p>
+          <div className="mb-2">
+            <em>{nights}</em> Nights /
+            <em> ${rental.dailyPrice}</em> per Night
+            <p>Guests: <em>{guests}</em></p>
+            <p>Price: <em>${price}</em></p>
+            <p>Do you confirm your booking for selected days?</p>
+          </div>
+          <ApiErrors errors={errors}/>
         </BwmModal>
         <hr></hr>
         <p className='booking-note-title'>People are interested into this house</p>
