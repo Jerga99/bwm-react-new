@@ -50,8 +50,13 @@ class BookingReserve extends React.Component {
     alert(JSON.stringify(this.state.proposedBooking));
   }
 
+  get formattedDate() {
+    return this.dateRef.current ? this.dateRef.current.value : '';
+  }
+
   render() {
     const { rental } = this.props;
+    const { proposedBooking } = this.state;
     return (
       <div className='booking'>
         <h3 className='booking-price'>$ {rental.dailyPrice} <span className='booking-per-night'>per night</span></h3>
@@ -75,20 +80,28 @@ class BookingReserve extends React.Component {
           <label htmlFor='guests'>Guests</label>
           <input 
             onChange={this.handleGuestsChange}
-            value={this.state.proposedBooking.guests}
+            value={proposedBooking.guests}
             type='number'
             className='form-control'
             id='guests'
             aria-describedby='guests'>
           </input>
         </div>
-        <BwmModal>
-          <p>Hello World</p>
+        <BwmModal
+          onSubmit={this.reserveRental}
+          title="Confirm Booking"
+          subtitle={this.formattedDate}
+          openBtn={
+            <button 
+              className='btn btn-bwm-main btn-block'>Reserve place now
+            </button>}
+        >
+          <em>12</em> Nights /
+          <em> ${rental.dailyPrice}</em> per Night
+          <p>Guests: <em>{proposedBooking.guests}</em></p>
+          <p>Price: <em>$200</em></p>
+          <p>Do you confirm your booking for selected days?</p>
         </BwmModal>
-        {/* <button 
-          onClick={this.reserveRental}
-          className='btn btn-bwm-main btn-block'>Reserve place now
-        </button> */}
         <hr></hr>
         <p className='booking-note-title'>People are interested into this house</p>
         <p className='booking-note-text'>

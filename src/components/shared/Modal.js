@@ -5,15 +5,24 @@ import Modal from 'react-responsive-modal';
 
 const BwmModal = ({
   title = "Modal Window", 
-  subtitle="Confirm your data", 
+  subtitle="Confirm your data",
+  openBtn: OpenBtn, 
+  onSubmit,
   children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      <button
-        onClick={() => setIsOpen(true)}
-        className="btn btn-success">Open</button>
+      { !OpenBtn &&
+        <button
+          onClick={() => setIsOpen(true)}
+          className="btn btn-success">Open</button>
+      }
+      { OpenBtn &&
+        <div onClick={() => setIsOpen(true)}>
+          {OpenBtn}
+        </div>
+      }
       <Modal 
         focusTrapped={false}
         open={isOpen}
@@ -26,6 +35,7 @@ const BwmModal = ({
       </div>
       <div className='modal-footer'>
         <button 
+          onClick={onSubmit}
           type='button' 
           className='btn btn-bwm-main'>Confirm</button>
         <button 
