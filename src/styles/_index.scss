@@ -56,5 +56,9 @@ html, body {
       color: white;
       box-shadow: none;
     }
+
+    &:disabled {
+      cursor: no-drop;
+    }
   }
 }
