@@ -2,8 +2,9 @@
 import axiosService from 'services/AxiosService';
 const { bwmAxios } = axiosService;
 
-export const fetchRentals = () => dispatch => {
-  bwmAxios.get('/rentals')
+export const fetchRentals = (location) => dispatch => {
+  const query = location ? `/rentals?city=${location}` : '/rentals';
+  bwmAxios.get(query)
     .then(res => {
       const rentals = res.data;
       dispatch({

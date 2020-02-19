@@ -8,6 +8,7 @@ import AuthRoute from 'components/auth/AuthRoute';
 import GuestRoute from 'components/auth/GuestRoute';
 
 import RentalHome from './pages/RentalHome';
+import RentalHomeSearch from 'pages/RentalHomeSearch';
 import RentalDetail from './pages/RentalDetail';
 import RentalNew from './pages/RentalNew';
 import Login from './pages/Login';
@@ -20,6 +21,9 @@ const Routes = () => {
       <Switch>
         <Route exact path="/">
           <RentalHome />
+        </Route>
+        <Route path="/rentals/:location/homes">
+          <RentalHomeSearch />
         </Route>
         <AuthRoute path="/rentals/new">
           <RentalNew />
