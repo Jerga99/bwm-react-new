@@ -35,6 +35,11 @@ class RentalHomeSearch extends React.Component {
   get location() {
     return this.props.match.params.location;
   }
+
+  get noRentalsFound() {
+    const { rentals, isFetching } = this.props;
+    return rentals.length === 0 && !isFetching;
+  }
   
   render() {
     const { rentals } = this.props;
@@ -45,14 +50,18 @@ class RentalHomeSearch extends React.Component {
         <div className="row">
           { this.renderRentals(rentals) }
         </div>
+        { this.noRentalsFound &&
+          <p className="alert alert-warning">No rentals found :(</p>
+        }
       </div>
     )
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({rentals}) => {
   return {
-    rentals: state.rentals
+    rentals: rentals.items,
+    isFetching: rentals.isFetching
   }
 }
 
