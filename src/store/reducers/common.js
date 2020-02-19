@@ -8,6 +8,8 @@ export const itemsReducer = resource => {
     }
 
     switch(action.type) {
+      case 'REQUEST_DATA':
+        return [];
       case 'REQUEST_DATA_COMPLETE':
         return action.data;
       default:

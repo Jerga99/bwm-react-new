@@ -2,7 +2,6 @@ import { combineReducers } from "redux"
 import { createList } from './common';
 
 
-
 const initManageReducer = () => {
   return combineReducers({
     rentals: createList('manage-rentals'),
