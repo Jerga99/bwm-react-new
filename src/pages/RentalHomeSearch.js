@@ -10,7 +10,18 @@ import { capitalize } from 'helpers/functions';
 class RentalHomeSearch extends React.Component {
 
   componentDidMount() {
-    const { location } = this.props.match.params;
+    this.getRentals(this.location);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { location: prevLocation } = prevProps.match.params;
+
+    if (this.location !== prevLocation) {
+      this.getRentals(this.location);
+    }
+  }
+
+  getRentals(location) {
     this.props.dispatch(fetchRentals(location));
   }
 
@@ -20,14 +31,17 @@ class RentalHomeSearch extends React.Component {
         <RentalCard rental={rental}/>
       </div>
     );
+
+  get location() {
+    return this.props.match.params.location;
+  }
   
   render() {
     const { rentals } = this.props;
-    const { location } = this.props.match.params;
-
+    
     return (
       <div className="card-list">  
-        <h1 className="page-title">Your Home in "{capitalize(location)}"</h1>
+        <h1 className="page-title">Your Home in "{capitalize(this.location)}"</h1>
         <div className="row">
           { this.renderRentals(rentals) }
         </div>
