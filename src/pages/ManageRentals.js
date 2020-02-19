@@ -22,7 +22,7 @@ class ManageRentals extends React.Component {
     const { rentals } = this.props;
     return (
       <div className="card-list">  
-        <h1 className="page-title">Your Home All Around the World</h1>
+        <h1 className="page-title">My Rentals</h1>
         <div className="row">
           { this.renderRentals(rentals) }
         </div>

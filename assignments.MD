@@ -12,3 +12,10 @@
 3. Create route to [RentalNew] component with path `/rentals/new`
 4. Create link to [RentalNew] in manage dropdown in header
 5. allow only authenticated users to access this page
+
+## Manage Actions
+1. Fetch user bookings and received bookings
+2. Create actions to make a GET request to `/bookings/me` and `/bookings/received`
+3. Dispatch actions similiarly as in manage rentals
+4. Retreive bookings through the props and provide them to BookingListing
+5. Optionaly iterate over them and display booking data

@@ -12,3 +12,29 @@ export const getBookings = rentalId => {
   return bwmAxios.get(`/bookings?rental=${rentalId}`)
     .then(res => res.data)
 }
+
+export const fetchUserBookings = () => dispatch => {
+  dispatch({type: 'REQUEST_DATA', resource: 'manage-bookings'});
+  return bwmAxios.get('/bookings/me')
+    .then(res => res.data)
+    .then(bookings => {
+      dispatch({
+        type: 'REQUEST_DATA_COMPLETE',
+        data: bookings,
+        resource: 'manage-bookings'
+      })
+    })
+}
+
+export const fetchReceivedBookings = () => dispatch => {
+  dispatch({type: 'REQUEST_DATA', resource: 'received-bookings'});
+  return bwmAxios.get('/bookings/received')
+    .then(res => res.data)
+    .then(bookings => {
+      dispatch({
+        type: 'REQUEST_DATA_COMPLETE',
+        data: bookings,
+        resource: 'received-bookings'
+      })
+    })
+}
