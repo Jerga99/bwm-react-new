@@ -1,6 +1,6 @@
 
 import axiosService from 'services/AxiosService';
-import { extractApiErrors } from './index';
+import { deleteResource } from './index';
 const { bwmAxios } = axiosService;
 
 export const fetchRentals = (location) => dispatch => {
@@ -46,20 +46,8 @@ export const createRental = rental => {
 }
 
 export const deleteRental = rentalId => dispatch => {
-  return bwmAxios.delete(`/rentals/${rentalId}`)
-    .then(res => res.data)
-    .then(({id}) => {
-      dispatch({
-        type: 'DELETE_RESOURCE',
-        id,
-        resource: 'manage-rentals'
-      })
-    })
-    .catch(error => {
-      dispatch({
-        type: 'REQUEST_ERROR',
-        errors: extractApiErrors(error.response || []),
-        resource: 'manage-rentals'
-      })
-    })
+  return dispatch(
+    deleteResource(
+      { url: `/rentals/${rentalId}`, 
+        resource: 'manage-rentals'}))
 }
