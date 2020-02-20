@@ -3,6 +3,10 @@ import axiosService from 'services/AxiosService';
 import { deleteResource } from './index';
 const { bwmAxios } = axiosService;
 
+export const verifyRentalOwner = (rentalId) => {
+  return bwmAxios.get(`/rentals/${rentalId}/verify-user`);
+}
+
 export const fetchRentals = (location) => dispatch => {
   const query = location ? `/rentals?city=${location}` : '/rentals';
   dispatch({type: 'REQUEST_DATA', resource: 'rentals'});
