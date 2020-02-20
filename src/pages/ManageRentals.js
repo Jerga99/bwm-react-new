@@ -1,9 +1,9 @@
 
 import React from 'react';
-import { fetchUserRentals } from 'actions';
+import { fetchUserRentals, deleteRental } from 'actions';
 import { connect } from 'react-redux';
 import RentalCard from 'components/rental/RentalCard';
-
+import ApiErrors from 'components/forms/ApiErrors';
 
 class ManageRentals extends React.Component {
 
@@ -15,7 +15,7 @@ class ManageRentals extends React.Component {
     const canDelete = this.askForPermission();
     if (!canDelete) { return; }
 
-    alert('Deleting!');
+    this.props.dispatch(deleteRental(rentalId));
   }
 
   askForPermission() {
@@ -39,13 +39,19 @@ class ManageRentals extends React.Component {
     );
 
   render() {
-    const { rentals } = this.props;
+    const { rentals, errors, isFetching } = this.props;
     return (
       <div className="card-list">  
         <h1 className="page-title">My Rentals</h1>
+        <ApiErrors errors={errors} />
         <div className="row">
           { this.renderRentals(rentals) }
         </div>
+        { !isFetching && rentals.length === 0 &&
+          <p className="alert alert-warning">
+            You dont have any rentals currently created :(
+          </p>
+        }
       </div>
     )
   }
@@ -54,7 +60,8 @@ class ManageRentals extends React.Component {
 const mapStateToProps = ({manage}) => {
   return {
     rentals: manage.rentals.items,
-    isFetching: manage.rentals.isFetching
+    isFetching: manage.rentals.isFetching,
+    errors: manage.rentals.errors
   }
 }
 
