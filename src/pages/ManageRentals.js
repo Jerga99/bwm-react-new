@@ -4,6 +4,7 @@ import { fetchUserRentals, deleteRental } from 'actions';
 import { connect } from 'react-redux';
 import RentalCard from 'components/rental/RentalCard';
 import ApiErrors from 'components/forms/ApiErrors';
+import { Link } from 'react-router-dom';
 
 class ManageRentals extends React.Component {
 
@@ -32,6 +33,9 @@ class ManageRentals extends React.Component {
               <button 
                 onClick={() => this.deleteRental(rental._id)}
                 className="btn btn-danger">Delete</button>
+              <Link 
+                to={{pathname: `/rentals/${rental._id}/edit`}}
+                className="btn btn-bwm-main ml-2">Update</Link>
             </>
           }
         />
