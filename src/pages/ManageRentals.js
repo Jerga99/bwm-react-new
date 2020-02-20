@@ -11,10 +11,30 @@ class ManageRentals extends React.Component {
     this.props.dispatch(fetchUserRentals());
   }
 
+  deleteRental = (rentalId) => {
+    const canDelete = this.askForPermission();
+    if (!canDelete) { return; }
+
+    alert('Deleting!');
+  }
+
+  askForPermission() {
+    return window.confirm('Are you sure you want to delete this rental?');
+  }
+
   renderRentals = (rentals) => 
     rentals.map(rental => 
       <div key={rental._id} className="col-md-3">
-        <RentalCard rental={rental}/>
+        <RentalCard 
+          rental={rental}
+          renderMenu={() => 
+            <>
+              <button 
+                onClick={() => this.deleteRental(rental._id)}
+                className="btn btn-danger">Delete</button>
+            </>
+          }
+        />
       </div>
     );
 
