@@ -3,8 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchRentalById, verifyRentalOwner } from 'actions';
-import RentalInfo from 'components/rental/RentalInfo';
 import TomMap from 'components/map/TomMap';
+import RentalAssets from 'components/rental/RentalAssets';
+import { capitalize } from 'helpers/functions';
+import EditableInput from 'components/editable/EditableInput';
 
 const withUserCheck = Component => props => {
   const [guard, setGuard] = useState({canProceed: false, isChecking: true});
@@ -62,7 +64,34 @@ class RentalEdit extends React.Component {
         <div className="details-section">
           <div className="row">
             <div className="col-md-8">
-              <RentalInfo rental={rental} />
+            <div className="rental">
+              <h2 className={`rental-type type-${rental.category}`}>
+                {rental.shared ? 'Shared' : 'Whole'} {rental.category}
+              </h2>
+              { rental.owner &&
+                <div className="rental-owner">
+                  <img src="https://api.adorable.io/avatars/285/abott@adorable.png" alt="owner"/>
+                  <span>{rental.owner.username}</span>
+                </div>
+              }
+              {/* <h1 className="rental-title">{rental.title}</h1> */}
+              <EditableInput
+                entity={rental}
+                field={'title'}
+                className={'rental-title'}
+              />
+              <h2 className="rental-city">{capitalize(rental.city)}</h2>
+              <div className="rental-room-info">
+                <span><i className="fa fa-building"></i>{rental.numOfRooms} bedrooms</span>
+                <span><i className="fa fa-user"></i> {rental.numOfRooms + 4} guests</span>
+                <span><i className="fa fa-bed"></i> {rental.numOfRooms + 2} beds</span>
+              </div>
+              <p className="rental-description">
+                {rental.description}
+              </p>
+              <hr/>
+              <RentalAssets />
+            </div>
             </div>
           </div>
         </div>
