@@ -38,3 +38,22 @@ export const fetchReceivedBookings = () => dispatch => {
       })
     })
 }
+
+export const deleteBooking = bookingId => dispatch => {
+  return bwmAxios.delete(`/bookings/${bookingId}`)
+    .then(res => res.data)
+    .then(({id}) => {
+      dispatch({
+        type: 'DELETE_RESOURCE',
+        id,
+        resource: 'manage-bookings'
+      })
+    })
+    .catch(error => {
+      dispatch({
+        type: 'REQUEST_ERROR',
+        errors: extractApiErrors(error.response || []),
+        resource: 'manage-bookings'
+      })
+    })
+}

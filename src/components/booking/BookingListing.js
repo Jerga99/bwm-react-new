@@ -3,12 +3,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { capitalize, formatDate } from 'helpers/functions';
+import ApiErrors from 'components/forms/ApiErrors';
 
-const BookingListing = ({bookings, type, title = "Bookings"}) => {
+const BookingListing = ({
+  isFetching,
+  errors,
+  bookings, 
+  renderMenu,
+  type, 
+  title = "Bookings"}) => {
 
   return (
     <section className="booking-listing">
       <h1 className="page-title">{title}</h1>
+      { !isFetching && bookings.length === 0 &&
+        <p className="alert alert-warning">No bookings created :(</p>
+      }
+      <ApiErrors errors={errors} />
       <div className="row">
         { bookings.map(booking =>
           <div key={booking._id} className="col-md-4">
@@ -27,9 +38,9 @@ const BookingListing = ({bookings, type, title = "Bookings"}) => {
                 <Link 
                   to={{pathname: `/rentals/${booking.rental._id}`}} 
                   className="btn btn-bwm-main">Go to Rental</Link>
-                <button
-                  className="ml-1 btn btn-danger">Delete
-                </button>
+                { renderMenu &&
+                  renderMenu(booking._id)
+                }
               </div>
               <div className="card-footer text-muted">
                 Created at {formatDate(booking.createdAt)}

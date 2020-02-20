@@ -11,9 +11,11 @@ class ReceivedBookings extends React.Component {
   }
 
   render() {
-    const { bookings } = this.props;
+    const { bookings, isFetching, errors } = this.props;
     return (
       <BookingListing 
+        errors={errors}
+        isFetching={isFetching}
         title="Received Bookings"
         type="received"
         bookings={bookings} />
@@ -24,7 +26,8 @@ class ReceivedBookings extends React.Component {
 const mapStateToProps = ({manage}) => {
   return {
     bookings: manage.receivedBookings.items,
-    isFetching: manage.receivedBookings.isFetching
+    isFetching: manage.receivedBookings.isFetching,
+    errors: manage.receivedBookings.errors
   }
 }
 
