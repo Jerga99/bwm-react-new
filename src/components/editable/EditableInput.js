@@ -17,6 +17,10 @@ class EditableInput extends React.Component {
   activateInput = () => this.setState({isActiveInput: true})
   disableInput = () => this.setState({isActiveInput: false})
 
+  handleChange = event => {
+    this.setState({value: event.target.value})
+  }
+
   renderComponentView = () => {
     const { value, isActiveInput } = this.state;
     const { className } = this.props; 
@@ -24,13 +28,16 @@ class EditableInput extends React.Component {
       return (
         <>
           <input
+            onChange={this.handleChange}
             className={className}
             value={value}>
           </input>
-          <button
-            onClick={this.disableInput}
-            className="btn btn-warning">Cancel
-          </button>
+          <div className="button-container">
+            <button
+              onClick={this.disableInput}
+              className="btn btn-warning btn-editable">Cancel
+            </button>
+          </div>
         </>
       )
     }
@@ -38,10 +45,12 @@ class EditableInput extends React.Component {
     return (
       <>
         <span className={className}>{value}</span>
-        <button
-            onClick={this.activateInput}
-            className="btn btn-warning">Edit
-        </button>
+        <div className="button-container">
+          <button
+              onClick={this.activateInput}
+              className="btn btn-warning btn-editable">Edit
+          </button>
+        </div>
       </>
     )
   }
