@@ -40,6 +40,10 @@ class RentalEdit extends React.Component {
     this.props.dispatch({type: 'UNMOUNT_RENTAL'});
   }
 
+  updateRental = (rentalData) => {
+    alert(`Updating ${JSON.stringify(rentalData)}`)
+  }
+
   get location() {
     const { rental: { street, city }} = this.props;
     return street && city && city + ', ' + street
@@ -50,7 +54,6 @@ class RentalEdit extends React.Component {
     if (isFetching || !rental._id) { return null; }
     return (
       <section id="rentalDetails">
-        <h1>Rental Edit</h1>
         <div className="upper-section">
           <div className="row">
             <div className="col-md-6">
@@ -68,16 +71,11 @@ class RentalEdit extends React.Component {
               <h2 className={`rental-type type-${rental.category}`}>
                 {rental.shared ? 'Shared' : 'Whole'} {rental.category}
               </h2>
-              { rental.owner &&
-                <div className="rental-owner">
-                  <img src="https://api.adorable.io/avatars/285/abott@adorable.png" alt="owner"/>
-                  <span>{rental.owner.username}</span>
-                </div>
-              }
               {/* <h1 className="rental-title">{rental.title}</h1> */}
               <EditableInput
                 entity={rental}
                 field={'title'}
+                onUpdate={this.updateRental}
                 className={'rental-title'}
               />
               <h2 className="rental-city">{capitalize(rental.city)}</h2>

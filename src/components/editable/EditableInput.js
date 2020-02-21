@@ -4,7 +4,7 @@ import React from 'react';
 
 class EditableInput extends React.Component {
 
-  constructor({entity, field, className}) {
+  constructor({entity, field}) {
     super();
 
     this.state = {
@@ -14,8 +14,21 @@ class EditableInput extends React.Component {
     }
   }
 
+  update = () => {
+    const { value, originValue } = this.state;
+    const { onUpdate, field } = this.props;
+
+    if (value !== originValue) {
+      onUpdate({[field]: value})
+
+      this.setState({isActiveInput: false, originValue: value});
+    }
+  }
+
   activateInput = () => this.setState({isActiveInput: true})
-  disableInput = () => this.setState({isActiveInput: false})
+
+  disableInput = () => 
+    this.setState({isActiveInput: false, value: this.state.originValue})
 
   handleChange = event => {
     this.setState({value: event.target.value})
@@ -34,8 +47,12 @@ class EditableInput extends React.Component {
           </input>
           <div className="button-container">
             <button
+              onClick={this.update}
+              className="btn btn-success btn-editable">Save
+            </button>
+            <button
               onClick={this.disableInput}
-              className="btn btn-warning btn-editable">Cancel
+              className="btn btn-danger btn-editable">Cancel
             </button>
           </div>
         </>
