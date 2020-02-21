@@ -7,6 +7,8 @@ import TomMap from 'components/map/TomMap';
 import RentalAssets from 'components/rental/RentalAssets';
 import { capitalize } from 'helpers/functions';
 import EditableInput from 'components/editable/EditableInput';
+import { toast } from 'react-toastify';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const withUserCheck = Component => props => {
   const [guard, setGuard] = useState({canProceed: false, isChecking: true});
@@ -46,7 +48,11 @@ class RentalEdit extends React.Component {
       .then(() => {
         onSuccess()
       })
-      .catch(() => {
+      .catch(errors => {
+        const message = errors.length > 0 ? errors[0].detail : 'Ooops, something went wrong';
+        toast.error(message, {
+          autoClose: 3000
+        });
         onError();
       })
   }
@@ -85,11 +91,28 @@ class RentalEdit extends React.Component {
                 onUpdate={this.updateRental}
                 className={'rental-title'}
               />
-              <h2 className="rental-city">{capitalize(rental.city)}</h2>
+              <EditableInput
+                entity={rental}
+                field={'city'}
+                onUpdate={this.updateRental}
+                className={'rental-city'}
+              />
+              <EditableInput
+                entity={rental}
+                field={'street'}
+                onUpdate={this.updateRental}
+                className={'rental-street'}
+              />
               <div className="rental-room-info">
-                <span><i className="fa fa-building"></i>{rental.numOfRooms} bedrooms</span>
-                <span><i className="fa fa-user"></i> {rental.numOfRooms + 4} guests</span>
-                <span><i className="fa fa-bed"></i> {rental.numOfRooms + 2} beds</span>
+                <span>
+                  <FontAwesomeIcon icon="building" /> {rental.numOfRooms} bedrooms
+                </span>
+                <span>
+                  <FontAwesomeIcon icon="user"/> {rental.numOfRooms + 4} guests
+                </span>
+                <span>
+                  <FontAwesomeIcon icon="bed"/> {rental.numOfRooms + 2} beds
+                </span>
               </div>
               <p className="rental-description">
                 {rental.description}
