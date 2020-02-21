@@ -2,19 +2,20 @@
 import React from 'react';
 import EditableComponent from './EditableComponent';
 
-class EditableInput extends EditableComponent {
+class EditableTextarea extends EditableComponent {
 
   renderComponentView = () => {
     const { value, isActiveInput } = this.state;
-    const { className, transformView} = this.props; 
+    const { className, transformView, rows = 5, cols = 50} = this.props; 
     if (isActiveInput) {
       return (
         <>
-          <input
+          <textarea
             onChange={this.handleChange}
             className={`editable-item ${className}`}
-            value={value}>
-          </input>
+            value={value} 
+            rows={rows}
+            cols={cols} />
           <div className="button-container">
             <button
               onClick={this.update}
@@ -55,4 +56,4 @@ class EditableInput extends EditableComponent {
   }
 }
 
-export default EditableInput;
+export default EditableTextarea;

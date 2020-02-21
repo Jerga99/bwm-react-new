@@ -5,10 +5,11 @@ import { connect } from 'react-redux';
 import { fetchRentalById, verifyRentalOwner, updateRental } from 'actions';
 import TomMap from 'components/map/TomMap';
 import RentalAssets from 'components/rental/RentalAssets';
-import { capitalize } from 'helpers/functions';
-import EditableInput from 'components/editable/EditableInput';
+import { capitalize } from 'helpers/functions'
 import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import EditableInput from 'components/editable/EditableInput';
+import EditableTextarea from 'components/editable/EditableTextarea';
 
 const withUserCheck = Component => props => {
   const [guard, setGuard] = useState({canProceed: false, isChecking: true});
@@ -105,7 +106,7 @@ class RentalEdit extends React.Component {
                 transformView={value => capitalize(value)}
                 className={'rental-street'}
               />
-              <div className="rental-room-info">
+              <div className="rental-room-info mb-1">
                 <span>
                   <FontAwesomeIcon icon="building" />
                   <EditableInput
@@ -123,9 +124,14 @@ class RentalEdit extends React.Component {
                   <FontAwesomeIcon icon="bed"/> {rental.numOfRooms + 2} beds
                 </span>
               </div>
-              <p className="rental-description">
-                {rental.description}
-              </p>
+              <EditableTextarea
+                entity={rental}
+                field={'description'}
+                onUpdate={this.updateRental}
+                className={'rental-description'}
+                rows={5}
+                cols={60}
+              />
               <hr/>
               <RentalAssets />
             </div>
