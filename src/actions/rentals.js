@@ -49,6 +49,17 @@ export const createRental = rental => {
   return bwmAxios.post('/rentals', rental);
 }
 
+export const updateRental = (id, rentalData) => dispatch => {
+  return bwmAxios.patch(`/rentals/${id}`, rentalData)
+    .then(res => res.data)
+    .then(updatedRental => 
+      dispatch({
+        type: 'UPDATE_RENTAL_SUCCESS',
+        rental: updatedRental
+      })
+    )
+}
+
 export const deleteRental = rentalId => dispatch => {
   return dispatch(
     deleteResource(

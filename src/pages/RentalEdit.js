@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchRentalById, verifyRentalOwner } from 'actions';
+import { fetchRentalById, verifyRentalOwner, updateRental } from 'actions';
 import TomMap from 'components/map/TomMap';
 import RentalAssets from 'components/rental/RentalAssets';
 import { capitalize } from 'helpers/functions';
@@ -40,8 +40,15 @@ class RentalEdit extends React.Component {
     this.props.dispatch({type: 'UNMOUNT_RENTAL'});
   }
 
-  updateRental = (rentalData) => {
-    alert(`Updating ${JSON.stringify(rentalData)}`)
+  updateRental = (rentalData, onSuccess, onError) => {
+    const { id } = this.props.match.params;
+    this.props.dispatch(updateRental(id, rentalData))
+      .then(() => {
+        onSuccess()
+      })
+      .catch(() => {
+        onError();
+      })
   }
 
   get location() {

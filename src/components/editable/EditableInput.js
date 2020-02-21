@@ -19,9 +19,10 @@ class EditableInput extends React.Component {
     const { onUpdate, field } = this.props;
 
     if (value !== originValue) {
-      onUpdate({[field]: value})
-
-      this.setState({isActiveInput: false, originValue: value});
+      onUpdate(
+        {[field]: value}, 
+        () => this.setState({isActiveInput: false, originValue: value}), 
+        () => this.setState({isActiveInput: false, value: originValue}))
     }
   }
 
