@@ -5,6 +5,10 @@
   display: flex;
   margin-bottom: 5px;
 
+  &-inline {
+    display: inline-flex;
+  }
+
   .editable-item {
     margin-bottom: 0 !important;
   }
