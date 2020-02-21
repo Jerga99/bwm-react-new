@@ -37,13 +37,13 @@ class EditableInput extends React.Component {
 
   renderComponentView = () => {
     const { value, isActiveInput } = this.state;
-    const { className } = this.props; 
+    const { className, transformView} = this.props; 
     if (isActiveInput) {
       return (
         <>
           <input
             onChange={this.handleChange}
-            className={className}
+            className={`editable-item ${className}`}
             value={value}>
           </input>
           <div className="button-container">
@@ -62,7 +62,10 @@ class EditableInput extends React.Component {
 
     return (
       <>
-        <span className={className}>{value}</span>
+        <span 
+          className={`editable-item ${className}`}>
+          { transformView ? transformView(value) : value }
+        </span>
         <div className="button-container">
           <button
               onClick={this.activateInput}

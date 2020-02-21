@@ -95,12 +95,14 @@ class RentalEdit extends React.Component {
                 entity={rental}
                 field={'city'}
                 onUpdate={this.updateRental}
+                transformView={value => capitalize(value)}
                 className={'rental-city'}
               />
               <EditableInput
                 entity={rental}
                 field={'street'}
                 onUpdate={this.updateRental}
+                transformView={value => capitalize(value)}
                 className={'rental-street'}
               />
               <div className="rental-room-info">
