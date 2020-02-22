@@ -51,7 +51,11 @@ class FileLoader extends React.Component {
             />
         </label>
         { imgBase64 &&
-          <img src={imgBase64}></img>
+          <div className="img-preview-container">
+            <div className="img-preview">
+              <img src={imgBase64}></img>
+            </div>
+          </div>
         }
       </div>
     )
