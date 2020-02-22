@@ -1,7 +1,7 @@
 import React from 'react';
 import EditableComponent from './EditableComponent';
 
-class EditableSelect extends React.Component {
+export class EditableSelect extends React.Component {
 
   renderOptions = (options) => 
     options.map(option => 
@@ -13,8 +13,9 @@ class EditableSelect extends React.Component {
     return (
       <EditableComponent
         {...this.props}
-        renderComponent={(value, onChange) => 
+        renderComponent={(value, onChange, onKeyDown) => 
           <select 
+            onKeyDown={onKeyDown}
             onChange={onChange}
             className={`editable-item ${className}`}
             value={value}>
@@ -25,5 +26,3 @@ class EditableSelect extends React.Component {
     )
   }
 }
-
-export default EditableSelect;

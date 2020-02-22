@@ -2,14 +2,15 @@
 import React from 'react';
 import EditableComponent from './EditableComponent';
 
-class EditableInput extends React.Component {
+export class EditableInput extends React.Component {
 
   render() {
     return (
       <EditableComponent
         {...this.props}
-        renderComponent={(value, onChange) => 
+        renderComponent={(value, onChange, onKeyDown) => 
           <input
+            onKeyDown={onKeyDown}
             value={value}
             onChange={onChange}
             className={`editable-item ${this.props.className}`}>
@@ -19,5 +20,3 @@ class EditableInput extends React.Component {
     )
   }
 }
-
-export default EditableInput;
