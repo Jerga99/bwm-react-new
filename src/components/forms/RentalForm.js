@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import FileLoader from 'components/file-upload/FileLoader';
 
 const rentalOptions = ['apartment', 'condo', 'house'];
 
@@ -58,13 +59,7 @@ const RentalForm = ({onSubmit}) => {
       </div>
 
       <div className="form-group">
-        <label htmlFor="bedrooms">Image Url</label>
-        <input 
-          ref={register}
-          name="image"
-          type="text"
-          className="form-control"
-          id="image"/>
+        <FileLoader />
       </div>
 
       <div className="form-group">
