@@ -2,55 +2,20 @@
 import React from 'react';
 import EditableComponent from './EditableComponent';
 
-class EditableInput extends EditableComponent {
-
-  renderComponentView = () => {
-    const { value, isActiveInput } = this.state;
-    const { className, transformView} = this.props; 
-    if (isActiveInput) {
-      return (
-        <>
-          <input
-            onChange={this.handleChange}
-            className={`editable-item ${className}`}
-            value={value}>
-          </input>
-          <div className="button-container">
-            <button
-              onClick={this.update}
-              className="btn btn-success btn-editable">Save
-            </button>
-            <button
-              onClick={this.disableInput}
-              className="btn btn-danger btn-editable">Cancel
-            </button>
-          </div>
-        </>
-      )
-    }
-
-    return (
-      <>
-        <span 
-          className={`editable-item ${className}`}>
-          { transformView ? transformView(value) : value }
-        </span>
-        <div className="button-container">
-          <button
-              onClick={this.activateInput}
-              className="btn btn-warning btn-editable">Edit
-          </button>
-        </div>
-      </>
-    )
-  }
+class EditableInput extends React.Component {
 
   render() {
-    const { inline } = this.props;
     return (
-      <div className={`editable-component ${inline ? 'editable-component-inline': ''}`}>
-        {this.renderComponentView()}
-      </div>
+      <EditableComponent
+        {...this.props}
+        renderComponent={(value, onChange) => 
+          <input
+            value={value}
+            onChange={onChange}
+            className={`editable-item ${this.props.className}`}>
+          </input>
+        }
+      />
     )
   }
 }
