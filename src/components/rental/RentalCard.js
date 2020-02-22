@@ -11,7 +11,7 @@ const RentalCard = ({rental, renderMenu}) => {
         <div className="card bwm-card">
           <img 
             className="card-img-top" 
-            src={rental.image}
+            src={rental.image.url}
             alt={rental.title} />
           <div className="card-body">
             <h6 className={`card-subtitle mb-0 type-${rental.category}`}>
