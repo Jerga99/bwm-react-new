@@ -12,6 +12,7 @@ class RentalNew extends React.Component {
   }
 
   handleRentalCreate = (rentalData) => {
+    debugger
     createRental(rentalData)
       .then(_ => this.setState({shouldRedirect: true}))
       .catch(_ => console.log('Errors'))

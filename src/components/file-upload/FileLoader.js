@@ -28,7 +28,9 @@ class FileLoader extends React.Component {
   handleImageUpload = () => {
     this.changeImageStatus('PENDING');
     uploadImage(this.selectedImg)
-      .then(() => {
+      .then(uploadedImage => {
+        debugger
+        this.props.onFileUpload(uploadedImage._id);
         this.changeImageStatus('UPLOADED');
       })
       .catch(() => {
