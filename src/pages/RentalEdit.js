@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import EditableInput from 'components/editable/EditableInput';
 import EditableTextarea from 'components/editable/EditableTextarea';
+import EditableSelect from 'components/editable/EditableSelect';
 
 const withUserCheck = Component => props => {
   const [guard, setGuard] = useState({canProceed: false, isChecking: true});
@@ -82,10 +83,22 @@ class RentalEdit extends React.Component {
           <div className="row">
             <div className="col-md-8">
             <div className="rental">
-              <h2 className={`rental-type type-${rental.category}`}>
-                {rental.shared ? 'Shared' : 'Whole'} {rental.category}
-              </h2>
-              {/* <h1 className="rental-title">{rental.title}</h1> */}
+              <span className="rental-city">Is shared: </span>
+              <EditableSelect
+                entity={rental}
+                field={'shared'}
+                inline={true}
+                options={[true, false]}
+                onUpdate={this.updateRental}
+                className={`rental-type type-${rental.category}`}
+              />
+              <EditableSelect
+                entity={rental}
+                field={'category'}
+                options={['apartment', 'condo', 'house']}
+                onUpdate={this.updateRental}
+                className={`rental-type type-${rental.category}`}
+              />
               <EditableInput
                 entity={rental}
                 field={'title'}
