@@ -59,6 +59,7 @@ const RentalForm = ({onSubmit}) => {
       </div>
 
       <div className="form-group">
+        <label htmlFor="image">Image</label>
         <FileLoader />
       </div>
 

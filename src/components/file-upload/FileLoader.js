@@ -1,6 +1,6 @@
 
 import React from 'react';
-
+import './FileLoader.scss';
 
 class FileLoader extends React.Component {
 
@@ -11,15 +11,17 @@ class FileLoader extends React.Component {
 
   render() {
     return (
-      <>
-        <label className="upload-text">Select an image</label>
-        <input 
-          onChange={this.handleChange}
-          accept=".jpg, .png, .jpeg"
-          className="form-control"
-          type="file"
-          />
-      </>
+      <div className="img-upload-container">
+        <label className="img-upload btn btn-bwm-main">
+          <span className="upload-text">Select an image</span>
+          <input 
+            onChange={this.handleChange}
+            accept=".jpg, .png, .jpeg"
+            className="fileInput"
+            type="file"
+            />
+        </label>
+      </div>
     )
   }
 }
