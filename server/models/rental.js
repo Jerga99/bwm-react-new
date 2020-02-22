@@ -7,11 +7,11 @@ const rentalSchema = new Schema({
   city: { type: String, required: true, lowercase: true },
   street: { type: String, lowercase: true, required: true, minlength: [4, 'Invalid length! Minimum is 4 characters']},
   category: { type: String, required: true, lowercase: true },
-  image: { type: String, required: true },
   numOfRooms: { type: Number, required: true },
   description: { type: String, required: true },
   dailyPrice: { type: Number, required: true },
   shared: Boolean,
+  image: { type: Schema.Types.ObjectId, ref: 'CloudinaryImage' },
   owner: { type: Schema.Types.ObjectId, ref: 'User'},
   createdAt: { type: Date, default: Date.now }
 })
