@@ -1,5 +1,6 @@
 
 import React from 'react';
+import Spinner from 'components/shared/Spinner';
 import { uploadImage } from 'actions';
 import './FileLoader.scss';
 
@@ -82,7 +83,7 @@ class FileLoader extends React.Component {
               </div>
               { imgStatus === 'PENDING' &&
                 <div className="spinner-container upload-status">
-                  Loading...
+                  <Spinner />
                 </div>
               }
               { imgStatus === 'UPLOADED' &&
