@@ -7,6 +7,7 @@ class FileLoader extends React.Component {
 
   constructor() {
     super();
+    this.inputRef = React.createRef();
     this.fileReader = new FileReader();
     this.selectedImg = null;
     this.state = {
@@ -25,7 +26,7 @@ class FileLoader extends React.Component {
 
   handleImageUpload = () => {
     this.changeImageStatus('PENDING');
-    uploadImage('askjdn')
+    uploadImage(this.selectedImg)
       .then(() => {
         this.changeImageStatus('UPLOADED');
       })
@@ -51,6 +52,12 @@ class FileLoader extends React.Component {
     this.fileReader.readAsDataURL(this.selectedImg);
   }
 
+  cancelImage = () => {
+    this.inputRef.current.value = null;
+    this.selectedImg = null;
+    this.setState({imgBase64: '', imgStatus: 'INIT'});
+  }
+
   changeImageStatus= imgStatus => this.setState({imgStatus})
 
   render() {
@@ -60,6 +67,7 @@ class FileLoader extends React.Component {
         <label className="img-upload btn btn-bwm-main">
           <span className="upload-text">Select an image</span>
           <input 
+            ref={this.inputRef}
             onChange={this.handleChange}
             accept=".jpg, .png, .jpeg"
             className="fileInput"
@@ -89,20 +97,19 @@ class FileLoader extends React.Component {
               }
             </div>
             { imgStatus === 'LOADED' &&
-              <>
-                <button
-                  onClick={this.handleImageUpload}
-                  className="btn btn-success mr-1"
-                  type="button">
-                  Upload
-                </button>
-                <button
-                  className="btn btn-danger"
-                  type="button">
-                  Cancel
-                </button>
-              </>
+              <button
+                onClick={this.handleImageUpload}
+                className="btn btn-success mr-1"
+                type="button">
+                Upload
+              </button>
             }
+            <button
+              onClick={this.cancelImage}
+              className="btn btn-danger"
+              type="button">
+              Cancel
+            </button>
           </>
         }
       </div>
