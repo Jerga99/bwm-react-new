@@ -2,6 +2,7 @@
 import React from 'react';
 import Spinner from 'components/shared/Spinner';
 import { uploadImage } from 'actions';
+import { blobToFile, getCroppedImg } from 'helpers/functions';
 import ImageCrop from './ImageCrop';
 import './FileLoader.scss';
 
@@ -33,7 +34,7 @@ class FileLoader extends React.Component {
     const imageToUpload = blobToFile(croppedImg);
     uploadImage(imageToUpload)
       .then(uploadedImage => {
-        this.props.onFileUpload(uploadedImage._id);
+        this.props.onFileUpload(uploadedImage);
         this.changeImageStatus('UPLOADED');
       })
       .catch(() => {
@@ -133,46 +134,3 @@ class FileLoader extends React.Component {
 }
 
 export default FileLoader;
-
-function blobToFile(blob) {
-  return new File([blob], blob.name, {type: blob.type});
-}
-
-function getCroppedImg(image, crop, fileName) {
-  const canvas = document.createElement('canvas');
-  const scaleX = image.naturalWidth / image.width;
-  const scaleY = image.naturalHeight / image.height;
-  canvas.width = crop.width;
-  canvas.height = crop.height;
-  const ctx = canvas.getContext('2d');
-
-  ctx.drawImage(
-    image,
-    crop.x * scaleX,
-    crop.y * scaleY,
-    crop.width * scaleX,
-    crop.height * scaleY,
-    0,
-    0,
-    crop.width,
-    crop.height,
-  );
-
-  // As Base64 string
-  // const base64Image = canvas.toDataURL('image/jpeg');
-  // return base64Image;
-
-  return new Promise((resolve, reject) => {
-    canvas.toBlob(blob => {
-      if (!blob) {
-        //reject(new Error('Canvas is empty'));
-        reject('Canvas is empty');
-        return;
-      }
-      blob.name = fileName;
-      const fileUrl = window.URL.createObjectURL(blob);
-      blob.url = fileUrl;
-      resolve(blob);
-    }, 'image/jpeg');
-  });
-}
