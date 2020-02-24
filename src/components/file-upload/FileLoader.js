@@ -21,17 +21,17 @@ class FileLoader extends React.Component {
     this.fileReader = new FileReader();
     this.originalImage = null;
     this.state = {
-      croppedBase64: '',
+      croppedImg: null,
       selectedImg: null,
       imgStatus: 'INIT'
     }
   }
 
   handleImageUpload = () => {
-    const { selectedImg } = this.state;
+    const { croppedImg } = this.state;
     this.changeImageStatus('PENDING');
-    // todo: fix
-    uploadImage(selectedImg)
+    const imageToUpload = blobToFile(croppedImg);
+    uploadImage(imageToUpload)
       .then(uploadedImage => {
         this.props.onFileUpload(uploadedImage._id);
         this.changeImageStatus('UPLOADED');
@@ -43,11 +43,11 @@ class FileLoader extends React.Component {
 
   handleImageLoad = image => this.originalImage = image
 
-  handleCropComplete = crop => {
+  handleCropComplete = async crop => {
     if (!this.originalImage) { return; }
-    debugger
-    const croppedBase64 = getCroppedImg(this.originalImage, crop);
-    this.setState({croppedBase64});
+    const { selectedImg } = this.state;
+    const croppedImg = await getCroppedImg(this.originalImage, crop, selectedImg.name);
+    this.setState({croppedImg});
   }
 
   handleChange = event => {
@@ -57,20 +57,20 @@ class FileLoader extends React.Component {
       const selectedImg = new ImageSnippet(event.target.result, file.name, file.type);
       this.setState({ selectedImg, imgStatus: 'LOADED' })
     }
-    debugger
+    
     this.fileReader.readAsDataURL(file);
   }
 
   cancelImage = () => {
     this.inputRef.current.value = null;
     this.originalImage = null;
-    this.setState({selectedImg: null, croppedBase64: '', imgStatus: 'INIT'});
+    this.setState({selectedImg: null, croppedImg: null, imgStatus: 'INIT'});
   }
 
   changeImageStatus= imgStatus => this.setState({imgStatus})
 
   render() {
-    const { selectedImg, imgStatus, croppedBase64 } = this.state;
+    const { selectedImg, imgStatus, croppedImg } = this.state;
     return (
       <div className="img-upload-container">
         <label className="img-upload btn btn-bwm-main">
@@ -93,7 +93,7 @@ class FileLoader extends React.Component {
           <>
             <div className="img-preview-container mb-2">
               <div className="img-preview">
-                <img src={croppedBase64 || selectedImg.src} alt=""></img>
+                <img src={(croppedImg && croppedImg.url) || selectedImg.src} alt=""></img>
               </div>
               { imgStatus === 'PENDING' &&
                 <div className="spinner-container upload-status">
@@ -134,6 +134,9 @@ class FileLoader extends React.Component {
 
 export default FileLoader;
 
+function blobToFile(blob) {
+  return new File([blob], blob.name, {type: blob.type});
+}
 
 function getCroppedImg(image, crop, fileName) {
   const canvas = document.createElement('canvas');
@@ -156,14 +159,20 @@ function getCroppedImg(image, crop, fileName) {
   );
 
   // As Base64 string
-  const base64Image = canvas.toDataURL('image/jpeg');
-  return base64Image;
+  // const base64Image = canvas.toDataURL('image/jpeg');
+  // return base64Image;
 
-  // As a blob
-  // return new Promise((resolve, reject) => {
-  //   canvas.toBlob(blob => {
-  //     blob.name = fileName;
-  //     resolve(blob);
-  //   }, 'image/jpeg', 1);
-  // });
+  return new Promise((resolve, reject) => {
+    canvas.toBlob(blob => {
+      if (!blob) {
+        //reject(new Error('Canvas is empty'));
+        reject('Canvas is empty');
+        return;
+      }
+      blob.name = fileName;
+      const fileUrl = window.URL.createObjectURL(blob);
+      blob.url = fileUrl;
+      resolve(blob);
+    }, 'image/jpeg');
+  });
 }
