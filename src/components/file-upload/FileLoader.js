@@ -19,8 +19,9 @@ class FileLoader extends React.Component {
     super();
     this.inputRef = React.createRef();
     this.fileReader = new FileReader();
-    
+    this.originalImage = null;
     this.state = {
+      croppedBase64: '',
       selectedImg: null,
       imgStatus: 'INIT'
     }
@@ -40,6 +41,15 @@ class FileLoader extends React.Component {
       })
   }
 
+  handleImageLoad = image => this.originalImage = image
+
+  handleCropComplete = crop => {
+    if (!this.originalImage) { return; }
+    debugger
+    const croppedBase64 = getCroppedImg(this.originalImage, crop);
+    this.setState({croppedBase64});
+  }
+
   handleChange = event => {
     const file = event.target.files[0]; 
 
@@ -47,19 +57,20 @@ class FileLoader extends React.Component {
       const selectedImg = new ImageSnippet(event.target.result, file.name, file.type);
       this.setState({ selectedImg, imgStatus: 'LOADED' })
     }
-
+    debugger
     this.fileReader.readAsDataURL(file);
   }
 
   cancelImage = () => {
     this.inputRef.current.value = null;
-    this.setState({selectedImg: null, imgStatus: 'INIT'});
+    this.originalImage = null;
+    this.setState({selectedImg: null, croppedBase64: '', imgStatus: 'INIT'});
   }
 
   changeImageStatus= imgStatus => this.setState({imgStatus})
 
   render() {
-    const { selectedImg, imgStatus } = this.state;
+    const { selectedImg, imgStatus, croppedBase64 } = this.state;
     return (
       <div className="img-upload-container">
         <label className="img-upload btn btn-bwm-main">
@@ -73,13 +84,16 @@ class FileLoader extends React.Component {
             />
         </label>
         { selectedImg &&
-          <ImageCrop src={selectedImg.src} />
+          <ImageCrop 
+            src={selectedImg.src}
+            onCropComplete={this.handleCropComplete}
+            onImageLoaded={this.handleImageLoad} />
         }
         { selectedImg &&
           <>
             <div className="img-preview-container mb-2">
               <div className="img-preview">
-                <img src={selectedImg.src} alt=""></img>
+                <img src={croppedBase64 || selectedImg.src} alt=""></img>
               </div>
               { imgStatus === 'PENDING' &&
                 <div className="spinner-container upload-status">
@@ -119,3 +133,37 @@ class FileLoader extends React.Component {
 }
 
 export default FileLoader;
+
+
+function getCroppedImg(image, crop, fileName) {
+  const canvas = document.createElement('canvas');
+  const scaleX = image.naturalWidth / image.width;
+  const scaleY = image.naturalHeight / image.height;
+  canvas.width = crop.width;
+  canvas.height = crop.height;
+  const ctx = canvas.getContext('2d');
+
+  ctx.drawImage(
+    image,
+    crop.x * scaleX,
+    crop.y * scaleY,
+    crop.width * scaleX,
+    crop.height * scaleY,
+    0,
+    0,
+    crop.width,
+    crop.height,
+  );
+
+  // As Base64 string
+  const base64Image = canvas.toDataURL('image/jpeg');
+  return base64Image;
+
+  // As a blob
+  // return new Promise((resolve, reject) => {
+  //   canvas.toBlob(blob => {
+  //     blob.name = fileName;
+  //     resolve(blob);
+  //   }, 'image/jpeg', 1);
+  // });
+}

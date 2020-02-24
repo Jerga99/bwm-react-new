@@ -20,12 +20,14 @@ class ImageCrop extends React.Component {
   };
 
   render() {
-    const { src } = this.props;
+    const { src, onImageLoaded, onCropComplete } = this.props;
     const { crop } = this.state;
     return (
       <ReactCrop 
         src={src} 
         crop={crop}
+        onImageLoaded={onImageLoaded}
+        onComplete={onCropComplete}
         onChange={this.onChange}/>
     )
   }
