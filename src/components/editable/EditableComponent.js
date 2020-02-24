@@ -97,9 +97,15 @@ class EditableComponent extends React.Component {
   }
 
   render() {
-    const { inline } = this.props;
+    const { containerType } = this.props;
+    let containerClass = '';
+    if (containerType === 'inline') {
+      containerClass = 'editable-component-inline';
+    } else if (containerType === 'block') {
+      containerClass = 'editable-component-block';
+    }
     return (
-      <div className={`editable-component ${inline ? 'editable-component-inline': ''}`}>
+      <div className={`editable-component ${containerClass}`}>
         {this.renderComponentView()}
       </div>
     )

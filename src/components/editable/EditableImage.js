@@ -16,7 +16,7 @@ export class EditableImage extends React.Component {
         {...this.props}
         viewComponent={ImageView}
         renderComponent={(value, onChange, onKeyDown) => 
-          <FileLoader />
+          <FileLoader onFileUpload={() => {}}/>
         }
       />
     )

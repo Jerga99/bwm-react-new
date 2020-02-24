@@ -71,7 +71,7 @@ class RentalEdit extends React.Component {
     const { rental, isFetching } = this.props;
     if (isFetching || !rental._id) { return null; }
     return (
-      <section id="rentalDetails">
+      <section id="rentalEdit">
         <div className="upper-section">
           <div className="row">
             <div className="col-md-6">
@@ -79,6 +79,8 @@ class RentalEdit extends React.Component {
               <EditableImage
                 entity={rental}
                 field={'image'}
+                containerType={"block"}
+                className="rental-img mb-2"
                 transformView={image => image.url}
                 onUpdate={this.updateRental}
               />
@@ -96,7 +98,7 @@ class RentalEdit extends React.Component {
               <EditableSelect
                 entity={rental}
                 field={'shared'}
-                inline={true}
+                containerType={"inline"}
                 options={[true, false]}
                 onUpdate={this.updateRental}
                 className={`rental-type type-${rental.category}`}
@@ -135,7 +137,7 @@ class RentalEdit extends React.Component {
                     entity={rental}
                     field={'numOfRooms'}
                     onUpdate={this.updateRental}
-                    inline={true}
+                    containerType={"inline"}
                     className={'mr-0 ml-2'}
                   /> bedrooms
                 </span>
