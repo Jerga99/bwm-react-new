@@ -12,7 +12,7 @@ const RentalForm = ({onSubmit}) => {
 
   useEffect(() => {
     register({name: 'image'})
-  }, [])
+  }, [register])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
