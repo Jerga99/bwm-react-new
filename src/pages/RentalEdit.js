@@ -11,7 +11,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
   EditableInput,
   EditableTextarea,
-  EditableSelect
+  EditableSelect,
+  EditableImage
 } from 'components/editable';
 
 const withUserCheck = Component => props => {
@@ -74,7 +75,13 @@ class RentalEdit extends React.Component {
         <div className="upper-section">
           <div className="row">
             <div className="col-md-6">
-              <img src={rental.image.url} alt={rental.title} />
+              {/* <img src={rental.image.url} alt={rental.title} /> */}
+              <EditableImage
+                entity={rental}
+                field={'image'}
+                transformView={image => image.url}
+                onUpdate={this.updateRental}
+              />
             </div>
             <div className="col-md-6">
               <TomMap location={this.location}/>
