@@ -1,6 +1,6 @@
 
 const mongoose = require('mongoose');
-const config = require('../config/dev');
+const config = require('../config');
 const FakeDB = require('./FakeDB');
 
 mongoose.connect(config.DB_URI, {

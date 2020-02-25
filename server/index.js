@@ -2,7 +2,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const config = require('./config/dev');
+const config = require('./config');
 const { provideErrorHandler } = require('./middlewares');
 const path = require('path');
 
