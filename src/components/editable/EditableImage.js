@@ -5,8 +5,12 @@ import FileLoader from 'components/file-upload/FileLoader';
 
 const ImageView = ({value, ...rest}) => {
   debugger
-  return <img {...rest} src={value}></img>
+  return <img {...rest} src={value} alt=""></img>
 }
+
+const createEvent = (value) => ({target: {value}})
+  
+
 
 export class EditableImage extends React.Component {
 
@@ -16,7 +20,7 @@ export class EditableImage extends React.Component {
         {...this.props}
         viewComponent={ImageView}
         renderComponent={(value, onChange, onKeyDown) => 
-          <FileLoader onFileUpload={() => {}}/>
+          <FileLoader onFileUpload={image => onChange(createEvent(image))}/>
         }
       />
     )
