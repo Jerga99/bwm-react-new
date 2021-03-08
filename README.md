@@ -11,7 +11,7 @@ module.exports = {
 }
 ```
 
-In base folder of project run `npm install` and then `npm start`
+In base folder of project run `npm install` and then `npm run start-dev`
 
 To run api server navigate to server folder `cd server` and run `node index.js`
 
